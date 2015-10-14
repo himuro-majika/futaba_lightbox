@@ -7,6 +7,9 @@
 
 ※ふたクロには対応していません  
 
+## インストール
+[ここ](https://github.com/himuro-majika/futaba_lightbox/raw/master/futaba_lightbox.user.js)
+
 
 ## 使い方
 * 画像のサムネイルをクリックでギャラリー表示
