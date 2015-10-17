@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        futaba lightbox
 // @namespace   https://github.com/himuro-majika
-// @description ふたばの画像表示にギャラリー風にしちゃう
+// @description ふたばの画像表示をギャラリー風にしちゃう
 // @include     http://*.2chan.net/*/res/*
 // @exclude     http://img.2chan.net/*/res/*
 // @exclude     http://dat.2chan.net/*/res/*
@@ -9,7 +9,7 @@
 // @require     https://github.com/fancyapps/fancyBox/raw/master/source/jquery.fancybox.js
 // @resource    fancyboxCSS https://github.com/fancyapps/fancyBox/raw/master/source/jquery.fancybox.css
 // @resource    fancyboxSprite https://github.com/fancyapps/fancyBox/raw/master/source/fancybox_sprite.png
-// @version     1
+// @version     1.0
 // @grant       GM_getResourceText
 // @grant       GM_getResourceURL
 // @grant       GM_addStyle
