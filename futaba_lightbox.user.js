@@ -9,7 +9,7 @@
 // @require     https://github.com/fancyapps/fancyBox/raw/master/source/jquery.fancybox.js
 // @resource    fancyboxCSS https://github.com/fancyapps/fancyBox/raw/master/source/jquery.fancybox.css
 // @resource    fancyboxSprite https://github.com/fancyapps/fancyBox/raw/master/source/fancybox_sprite.png
-// @version     1.0
+// @version     1.0.1
 // @grant       GM_getResourceText
 // @grant       GM_getResourceURL
 // @grant       GM_addStyle
@@ -53,9 +53,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
         },3000);
 
         function add_class_res() {
+             var Start = new Date().getTime();//count parsing time
             var $res_a = $(".rtd > a > img").parents("a");
             $res_a.addClass('futaba_lightbox');
             $res_a.attr("rel", "futaba_lightbox_gallery");
+             console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
         }
     }
 
@@ -75,19 +77,22 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
     function setup_fancybox() {
         $(".futaba_lightbox").fancybox({
-            margin : 10,
-            padding : 5,
-            openEffect : "none",
-            closeEffect : "none",
-            prevEffect : "none",
-    		nextEffect : "none",
-    		closeBtn : USE_CLOSEBTN,
-            loop : USE_LOOP,
+            margin : 15,                                         //画像外側のスペース
+            padding : 5,                                         //画像内側のスペース(白枠部)
+            openEffect : "none",                                 //開く時のエフェクト
+            closeEffect : "none",                                //閉じる時のエフェクト
+            prevEffect : "none",                                 //次移動時のエフェクト
+    		nextEffect : "none",                                 //前移動時のエフェクト
+            preload : "0",                                       //プリロードする画像の数
+    		closeBtn : USE_CLOSEBTN,                             //閉じるボタン
+            loop : USE_LOOP,                                     //末尾から先頭へのループ
             helpers : {
                 overlay : {
-                    speedOut   : 100,
+                    speedOut   : 100,                            //閉じる時の背景のフェード時間
+                    // showEarly : false,
+                    fixed : false,                               //固定表示(falseでスクロール可能)
                     css : {
-                        "background" : "rgba(0,0,0,0.85)"
+                        // "background" : "rgba(0,0,0,0.85)"     //背景色
                     }
                 }
             }
