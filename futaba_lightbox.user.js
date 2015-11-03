@@ -53,11 +53,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
         },3000);
 
         function add_class_res() {
-             var Start = new Date().getTime();//count parsing time
+            //  var Start = new Date().getTime();//count parsing time
             var $res_a = $(".rtd > a > img").parents("a");
             $res_a.addClass('futaba_lightbox');
             $res_a.attr("rel", "futaba_lightbox_gallery");
-             console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
+            //  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
         }
     }
 
