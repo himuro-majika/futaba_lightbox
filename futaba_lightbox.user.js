@@ -78,6 +78,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
             "}" +
             ".fancybox-nav {" +
             "  background: transparent;" +
+            "  width: 50%" +
             "}"
         );
     }
