@@ -133,6 +133,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
                 duration: 100,
                 queue: false
             });
+            // $("html,body").scrollTop(img_position);
         }
     }
 
