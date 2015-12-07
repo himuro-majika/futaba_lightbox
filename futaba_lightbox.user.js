@@ -25,6 +25,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
     var USE_CLOSEBTN = false;
     //末尾から先頭にループさせる
     var USE_LOOP = false;
+    //該当レスにスクロールする
+    var USE_SCROLL = true;
 
     init();
 
@@ -97,8 +99,32 @@ this.$ = this.jQuery = jQuery.noConflict(true);
                         // "background" : "rgba(0,0,0,0.85)"     //背景色
                     }
                 }
+            },
+            afterLoad: function(current, previous) {
+                // console.info( 'Current: ' + current.href );
+                // console.info( 'Previous: ' + (previous ? previous.href : '-') );
+                // if (previous) {
+                //     console.info( 'Navigating: ' + (current.index > previous.index ? 'right' : 'left') );
+                // }
+                if(USE_SCROLL){
+                    scrollToRes(current.href);
+                }
             }
         });
+    }
+
+    function scrollToRes(currenthref) {
+        var $img_a = $(".futaba_lightbox[href='" + currenthref + "']");
+        if($img_a.length){
+            var img_position = $img_a.offset().top;
+            $("html,body").animate({
+                scrollTop : img_position
+            },
+            {
+                duration: 100,
+                queue: false
+            });
+        }
     }
 
 })(jQuery);
