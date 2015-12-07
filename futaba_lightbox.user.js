@@ -49,7 +49,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
         //赤福操作パネル対策
         setTimeout(function(){
-            $("#akahuku_throp_thumbnail_button").removeClass("futaba_lightbox");
+            $attb = $("#akahuku_throp_thumbnail_button");
+            $attb.removeClass("futaba_lightbox");
+            $attb.attr("rel", "");
         },3000);
 
         function add_class_res() {
