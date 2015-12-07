@@ -85,7 +85,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
             closeEffect : "none",                                //閉じる時のエフェクト
             prevEffect : "none",                                 //次移動時のエフェクト
     		nextEffect : "none",                                 //前移動時のエフェクト
-            preload : "0",                                       //プリロードする画像の数
+            preload : "1",                                       //プリロードする画像の数
     		closeBtn : USE_CLOSEBTN,                             //閉じるボタン
             loop : USE_LOOP,                                     //末尾から先頭へのループ
             helpers : {
