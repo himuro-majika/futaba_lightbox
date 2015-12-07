@@ -71,10 +71,13 @@ this.$ = this.jQuery = jQuery.noConflict(true);
         var sprite = GM_getResourceURL("fancyboxSprite");
         GM_addStyle(
             "#fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span {" +
-            "	background-image: url(" + sprite + ");" +
+            "  background-image: url(" + sprite + ");" +
             "}" +
             "#fancybox-loading div {" +
-            "    display: none;" +
+            "  display: none;" +
+            "}" +
+            ".fancybox-nav {" +
+            "  background: transparent;" +
             "}"
         );
     }
@@ -97,6 +100,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
                     fixed : false,                               //固定表示(falseでスクロール可能)
                     css : {
                         // "background" : "rgba(0,0,0,0.85)"     //背景色
+                        background : "none"
                     }
                 }
             },
