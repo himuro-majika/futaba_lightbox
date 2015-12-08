@@ -112,6 +112,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
                 }
             },
             tpl : {
+                // image    : '<img class="fancybox-image" src="{href}" title="{href}" alt="" />',
+                error    : '<p class="fancybox-error">画像がないよ<br>すでに削除されてるかも</p>',
                 next     : '<a title="次の画像" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
                 prev     : '<a title="前の画像" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>'
             },
