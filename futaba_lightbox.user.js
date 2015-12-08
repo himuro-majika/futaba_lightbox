@@ -80,7 +80,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
             "}" +
             ".fancybox-nav {" +
             "  background: transparent;" +
-            "  width: 45%" +
+            "  width: 45%;" +
+            "}" +
+            // ふたクロ書き込みウィンドウ対応
+            ".fancybox-opened {" +
+            "  z-index: 2000000013;" +
             "}"
         );
     }
