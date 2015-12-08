@@ -136,7 +136,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
                 scrollTop : img_position
             },
             {
-                duration: 100,
+                duration: SCROLL_DURATION,
                 queue: false
             });
             // $("html,body").scrollTop(img_position);
