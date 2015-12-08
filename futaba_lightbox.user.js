@@ -54,18 +54,15 @@ this.$ = this.jQuery = jQuery.noConflict(true);
             add_class_res();
         }, 5000);
 
-        //赤福操作パネル対策
-        setTimeout(function(){
-            $attb = $("#akahuku_throp_thumbnail_button");
-            $attb.removeClass("futaba_lightbox");
-            $attb.attr("rel", "");
-        },3000);
-
         function add_class_res() {
             //  var Start = new Date().getTime();//count parsing time
             var $res_a = $(".rtd > a > img").parents("a");
             $res_a.addClass('futaba_lightbox');
             $res_a.attr("rel", "futaba_lightbox_gallery");
+            //赤福操作パネル対策
+            $attb = $("#akahuku_throp_thumbnail_button");
+            $attb.removeClass("futaba_lightbox");
+            $attb.attr("rel", "");
             //  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
         }
     }
