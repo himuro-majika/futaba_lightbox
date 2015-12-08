@@ -6,6 +6,7 @@
 // @exclude     http://img.2chan.net/*/res/*
 // @exclude     http://dat.2chan.net/*/res/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
+// @require     https://github.com/fancyapps/fancyBox/raw/master/lib/jquery.mousewheel.pack.js
 // @require     https://github.com/fancyapps/fancyBox/raw/master/source/jquery.fancybox.js
 // @resource    fancyboxCSS https://github.com/fancyapps/fancyBox/raw/master/source/jquery.fancybox.css
 // @resource    fancyboxSprite https://github.com/fancyapps/fancyBox/raw/master/source/fancybox_sprite.png
@@ -21,12 +22,16 @@ this.$ = this.jQuery = jQuery.noConflict(true);
     /*
     設定
     */
-    //閉じるボタンを表示する
+    // 閉じるボタンを表示する
     var USE_CLOSEBTN = false;
-    //末尾から先頭にループさせる
+    // 末尾から先頭にループさせる
     var USE_LOOP = false;
-    //該当レスにスクロールする
+    // マウスホイールでのナビゲーションを使用する
+    var USE_MOUSEWHEEL = true;
+    // 該当レスにスクロールする
     var USE_SCROLL = true;
+    // スクロールのなめらかさ
+    var SCROLL_DURATION = 100;
 
     init();
 
@@ -92,6 +97,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
             prevEffect : "none",                                 //次移動時のエフェクト
     		nextEffect : "none",                                 //前移動時のエフェクト
             preload : "2",                                       //プリロードする画像の数
+            mouseWheel : USE_MOUSEWHEEL,
     		closeBtn : USE_CLOSEBTN,                             //閉じるボタン
             loop : USE_LOOP,                                     //末尾から先頭へのループ
             helpers : {
