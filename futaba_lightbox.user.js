@@ -129,7 +129,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
     }
 
     function scrollToRes(currenthref) {
-        var $img_a = $(".futaba_lightbox[href='" + currenthref + "']");
+        var $img_a = $(".futaba_lightbox[href='" + currenthref + "']").parents("*");
         if($img_a.length){
             var img_position = $img_a.offset().top;
             $("html,body").animate({
