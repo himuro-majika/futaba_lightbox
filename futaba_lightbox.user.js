@@ -62,7 +62,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
         }, 1000);
 
         function add_class_res() {
-             var Start = new Date().getTime();//count parsing time
+            //  var Start = new Date().getTime();//count parsing time
             var $res_a = $(".rtd > a > img").parent();
             if($("#threadsbox").length) {    // futaboard
                 $res_a = $(".d6 > table img").parent();
@@ -70,7 +70,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
             $res_a.addClass('futaba_lightbox');
             $res_a.attr("rel", "futaba_lightbox_gallery");
             removeAkahukuThrop();
-             console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
+            //  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
         }
         // 赤福操作パネル対策
         function removeAkahukuThrop() {
