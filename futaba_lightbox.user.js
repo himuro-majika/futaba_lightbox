@@ -65,6 +65,20 @@ this.$ = this.jQuery = jQuery.noConflict(true);
             $attb.attr("rel", "");
             //  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
         }
+        // // 赤福操作パネル対策
+        // if(!$("#master").length) {
+        //     console.info($("#fm").length);
+        //     var timer_remove = setInterval(function(){
+        //         console.info($("#fm").length);
+        //         $attb = $("#akahuku_throp_thumbnail_button[rel='futaba_lightbox_gallery']");
+        //         if($attb.length) {
+        //             $attb.removeClass("futaba_lightbox");
+        //             $attb.attr("rel", "");
+        //             clearTimeout(timer_remove);
+        //         }
+        //         console.info("running");
+        //     }, 50);
+        // }
     }
 
     function add_css() {
