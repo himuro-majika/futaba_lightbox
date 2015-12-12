@@ -3,6 +3,7 @@
 // @namespace   https://github.com/himuro-majika
 // @description ふたばの画像表示をギャラリー風にしちゃう
 // @include     http://*.2chan.net/*/res/*
+// @include     http://board.futakuro.com/*/res/*
 // @exclude     http://img.2chan.net/*/res/*
 // @exclude     http://dat.2chan.net/*/res/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
@@ -44,7 +45,13 @@ this.$ = this.jQuery = jQuery.noConflict(true);
     }
 
     function add_class_and_rel() {
-        var $sure_a = $("body > form > a > img").parents("a");
+        var $sure_a = $("body > form > a > img").parent();
+        if($("#master").length) {   // ふたクロ
+            $sure_a = $("#master > a > img").parent();
+        }
+        if($("#threadsbox").length) {    // futaboard
+            $sure_a = $(".d7 > a > img").parent();
+        }
         $sure_a.addClass("futaba_lightbox");
         $sure_a.attr("rel", "futaba_lightbox_gallery");
 
@@ -52,33 +59,27 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
         setInterval(function(){
             add_class_res();
-        }, 5000);
+        }, 1000);
 
         function add_class_res() {
-            //  var Start = new Date().getTime();//count parsing time
-            var $res_a = $(".rtd > a > img").parents("a");
+             var Start = new Date().getTime();//count parsing time
+            var $res_a = $(".rtd > a > img").parent();
+            if($("#threadsbox").length) {    // futaboard
+                $res_a = $(".d6 > table img").parent();
+            }
             $res_a.addClass('futaba_lightbox');
             $res_a.attr("rel", "futaba_lightbox_gallery");
-            //赤福操作パネル対策
-            $attb = $("#akahuku_throp_thumbnail_button");
-            $attb.removeClass("futaba_lightbox");
-            $attb.attr("rel", "");
-            //  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
+            removeAkahukuThrop();
+             console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
         }
-        // // 赤福操作パネル対策
-        // if(!$("#master").length) {
-        //     console.info($("#fm").length);
-        //     var timer_remove = setInterval(function(){
-        //         console.info($("#fm").length);
-        //         $attb = $("#akahuku_throp_thumbnail_button[rel='futaba_lightbox_gallery']");
-        //         if($attb.length) {
-        //             $attb.removeClass("futaba_lightbox");
-        //             $attb.attr("rel", "");
-        //             clearTimeout(timer_remove);
-        //         }
-        //         console.info("running");
-        //     }, 50);
-        // }
+        // 赤福操作パネル対策
+        function removeAkahukuThrop() {
+            var $attb = $("#akahuku_throp_thumbnail_button[rel='futaba_lightbox_gallery']");
+            if($attb.length) {
+                $attb.removeClass("futaba_lightbox");
+                $attb.attr("rel", "");
+            }
+        }
     }
 
     function add_css() {
@@ -146,7 +147,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
     }
 
     function scrollToRes(currenthref) {
-        var $img_a = $(".futaba_lightbox[href='" + currenthref + "']").parents("*");
+        var $img_a = $(".futaba_lightbox[href='" + currenthref + "']").parent();
         if($img_a.length){
             var img_position = $img_a.offset().top;
             $("html,body").animate({
