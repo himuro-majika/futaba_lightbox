@@ -59,7 +59,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
         setInterval(function(){
             add_class_res();
-        }, 1000);
+        }, 2000);
 
         function add_class_res() {
             //  var Start = new Date().getTime();//count parsing time
