@@ -130,8 +130,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
             tpl : {
                 image    : '<a href="{href}" target="_blank"><img class="fancybox-image" src="{href}" alt="" /></a>',
                 error    : '<p class="fancybox-error">画像がないよ<br>すでに削除されてるかも</p>',
-                next     : '<a title="次" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
-                prev     : '<a title="前" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>'
+                next     : '<a title="次" class="fancybox-nav fancybox-next"><span></span></a>',
+                prev     : '<a title="前" class="fancybox-nav fancybox-prev"><span></span></a>'
             },
             afterLoad: function(current, previous) {
                 // console.info( 'Current: ' + current.href );
