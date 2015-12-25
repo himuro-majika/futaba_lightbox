@@ -57,10 +57,60 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 		add_class_res();
 
-		setInterval(function() {
-			add_class_res();
-		}, 2000);
-
+		// setInterval(function() {
+		// 	add_class_res();
+		// }, 2000);
+		
+		/**
+		 * 続きを読むで読み込まれたレスを監視
+		 */
+		observeInserted();
+		function observeInserted() {
+			// 対象ノードを選択
+			var target = document.querySelector("html > body > form[action]:not([enctype])");
+			if (document.querySelector(".d6")) {
+				target = document.querySelector(".d6"); // futaboard
+			}
+			// オブザーバの設定
+			var config = { childList: true };
+			var observer = new MutationObserver(function(mutations) {
+				mutations.forEach(function(mutation) {
+					add_class_res_inserted(mutation.addedNodes);
+				});
+			});
+			observer.observe(target, config);
+		}
+		
+		// 追加されたレスに属性を追加
+		function add_class_res_inserted(nodes) {
+			//  var Start = new Date().getTime();//count parsing time
+			console.log(nodes);
+			if (!$("#master").length) {
+				if ( nodes.length &&
+					nodes[0].tagName == "TABLE" &&
+					nodes[0].querySelector("td > a > img") ) {
+						var img_parent = nodes[0].querySelector("td > a > img").parentNode;
+						console.log(img_parent);
+						img_parent.className = "futaba_lightbox";
+						img_parent.setAttribute("rel", "futaba_lightbox_gallery");
+				}
+			}
+			else {
+				// ふたクロ
+				for (var i = 0; i < nodes.length; ++i) {
+					console.log("ふたクロ");
+					console.log(nodes[i]);
+					if (nodes[i].querySelector("td > a > img")) {
+						var img_parent = nodes[i].querySelector("td > a > img").parentNode;
+						console.log(img_parent);
+						img_parent.className = "futaba_lightbox";
+						img_parent.setAttribute("rel", "futaba_lightbox_gallery");
+					}
+				}
+			}
+			//  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
+		}
+		
 		function add_class_res() {
 			//  var Start = new Date().getTime();//count parsing time
 			var $res_a = $(".rtd > a > img").parent();
