@@ -84,28 +84,44 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		// 追加されたレスに属性を追加
 		function add_class_res_inserted(nodes) {
 			//  var Start = new Date().getTime();//count parsing time
-			console.log(nodes);
+			var img_parent;
 			if (!$("#master").length) {
+				// 赤福
 				if ( nodes.length &&
 					nodes[0].tagName == "TABLE" &&
 					nodes[0].querySelector("td > a > img") ) {
-						var img_parent = nodes[0].querySelector("td > a > img").parentNode;
+						img_parent = nodes[0].querySelector("td > a > img").parentNode;
 						console.log(img_parent);
 						img_parent.className = "futaba_lightbox";
 						img_parent.setAttribute("rel", "futaba_lightbox_gallery");
 				}
-			}
-			else {
+			} else {
 				// ふたクロ
-				for (var i = 0; i < nodes.length; ++i) {
-					console.log("ふたクロ");
-					console.log(nodes[i]);
-					if (nodes[i].querySelector("td > a > img")) {
-						var img_parent = nodes[i].querySelector("td > a > img").parentNode;
-						console.log(img_parent);
-						img_parent.className = "futaba_lightbox";
-						img_parent.setAttribute("rel", "futaba_lightbox_gallery");
+				if( nodes.length && nodes[0].tagName == "TABLE" ) {
+					for (var i = 0; i < nodes.length; ++i) {
+						console.log(nodes[i]);
+						if (nodes[i].querySelector("td > a > img")) {
+							img_parent = nodes[i].querySelector("td > a > img").parentNode;
+							console.log(img_parent);
+							img_parent.className = "futaba_lightbox";
+							img_parent.setAttribute("rel", "futaba_lightbox_gallery");
+						}
 					}
+				}
+				else if ( nodes.length && nodes[0].tagName == "DIV" ) {
+					// 続きを読む
+					var children = nodes[0].childNodes;
+					for (var j = 0; j < children.length; j++) {
+						console.log(children[j]);
+						if ( children[j].tagName == "TABLE" &&
+							children[j].querySelector("td > a > img") ) {
+							img_parent = children[j].querySelector("td > a > img").parentNode;
+							console.log(img_parent);
+							img_parent.className = "futaba_lightbox";
+							img_parent.setAttribute("rel", "futaba_lightbox_gallery");
+						}
+					}
+					
 				}
 			}
 			//  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
