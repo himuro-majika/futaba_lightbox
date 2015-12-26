@@ -43,57 +43,45 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		setup_fancybox();
 		// console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
 	}
-
+	// スレ内の画像にクラス、rel属性を追加する
 	function add_class_and_rel() {
-		var $sure_a = $("body > form > a > img").parent();
-		if ($("#master").length) { // ふたクロ
-			$sure_a = $("#master > a > img").parent();
+		// ふたクロ
+		if ($("#master").length) {
+			var FUTAKURO = true;
 		}
-		if ($("#threadsbox").length) { // futaboard
-			$sure_a = $(".d7 > a > img").parent();
+		// futaboard
+		if ($("#threadsbox").length) {
+			var FUTABOARD = true;
 		}
-		$sure_a.addClass("futaba_lightbox");
-		$sure_a.attr("rel", "futaba_lightbox_gallery");
-
-		add_class_res();
-
+		add_class_and_rel_Thread();
+		add_class_and_rel_Res();
+		removeAkahukuThrop();
 		observeInserted();
-		// 続きを読むで挿入される要素を監視
-		function observeInserted() {
-			// 対象ノードを選択
-			var target = $("html > body > form[action]:not([enctype])").get(0);
-			if ($(".d6").length) {
-				target = $(".d6").get(0); // futaboard
+		// スレ画
+		function add_class_and_rel_Thread() {
+			var $sure_a = $("body > form > a > img").parent();
+			if (FUTAKURO) { // ふたクロ
+				$sure_a = $("#master > a > img").parent();
 			}
-			var observer = new MutationObserver(function(mutations) {
-				mutations.forEach(function(mutation) {
-					// NodelistをjQueryオブジェクトに変換
-					var nodes = $(mutation.addedNodes);
-					add_class_res_inserted(nodes);
-				});
-			});
-			observer.observe(target, { childList: true });
+			if (FUTABOARD) { // futaboard
+				$sure_a = $(".d7 > a > img").parent();
+			}
+			$sure_a.addClass("futaba_lightbox");
+			$sure_a.attr("rel", "futaba_lightbox_gallery");
 		}
-		
-		// 追加されたレスに属性を追加
-		function add_class_res_inserted(nodes) {
-			var img_parent = nodes.find("td > a > img").parent();
-			img_parent.addClass("futaba_lightbox");
-			img_parent.attr("rel", "futaba_lightbox_gallery");
-		}
-		
-		function add_class_res() {
+		// レス画像
+		function add_class_and_rel_Res() {
 			//  var Start = new Date().getTime();//count parsing time
 			var $res_a = $(".rtd > a > img").parent();
-			if ($("#threadsbox").length) { // futaboard
+			if (FUTABOARD) { // futaboard
 				$res_a = $(".d6 > table img").parent();
 			}
 			$res_a.addClass('futaba_lightbox');
 			$res_a.attr("rel", "futaba_lightbox_gallery");
-			removeAkahukuThrop();
 			//  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
 		}
-		// 赤福操作パネル対策
+		// 赤福操作パネル対策	
+		// TODO:不完全
 		function removeAkahukuThrop() {
 			var $attb = $("#akahuku_throp_thumbnail_button[rel='futaba_lightbox_gallery']");
 			if ($attb.length) {
@@ -101,8 +89,28 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				$attb.attr("rel", "");
 			}
 		}
+		// 続きを読むで挿入される要素を監視
+		function observeInserted() {
+			var target = $("html > body > form[action]:not([enctype])").get(0);
+			if (FUTABOARD) {
+				target = $(".d6").get(0); // futaboard
+			}
+			var observer = new MutationObserver(function(mutations) {
+				mutations.forEach(function(mutation) {
+					var $nodes = $(mutation.addedNodes);
+					add_class_res_inserted($nodes);
+				});
+			});
+			observer.observe(target, { childList: true });
+		}
+		// 追加されたレスに属性を追加
+		function add_class_res_inserted($nodes) {
+			var img_parent = $nodes.find("td > a > img").parent();
+			img_parent.addClass("futaba_lightbox");
+			img_parent.attr("rel", "futaba_lightbox_gallery");
+		}
 	}
-
+	// CSSを設定
 	function add_css() {
 		var css = GM_getResourceText("fancyboxCSS");
 		GM_addStyle(css);
@@ -124,7 +132,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"}"
 		);
 	}
-
+	// fancyboxの設定
 	function setup_fancybox() {
 		$(".futaba_lightbox").fancybox({
 			margin: 15, //画像外側のスペース
@@ -148,12 +156,14 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 					}
 				}
 			},
+			// テンプレート
 			tpl: {
 				image: '<a href="{href}" target="_blank"><img class="fancybox-image" src="{href}" alt="" /></a>',
 				error: '<p class="fancybox-error">画像がないよ<br>すでに削除されてるかも</p>',
 				next: '<a title="次" class="fancybox-nav fancybox-next"><span></span></a>',
 				prev: '<a title="前" class="fancybox-nav fancybox-prev"><span></span></a>'
 			},
+			// 画像読み込み後イベント
 			afterLoad: function(current, previous) {
 				// console.info( 'Current: ' + current.href );
 				// console.info( 'Previous: ' + (previous ? previous.href : '-') );
@@ -165,19 +175,19 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				}
 			}
 		});
-	}
-
-	function scrollToRes(currenthref) {
-		var $img_a = $(".futaba_lightbox[href='" + currenthref + "']").parent();
-		if ($img_a.length) {
-			var img_position = $img_a.offset().top;
-			$("html,body").animate({
-				scrollTop: img_position
-			}, {
-				duration: SCROLL_DURATION,
-				queue: false
-			});
-			// $("html,body").scrollTop(img_position);
+		// ギャラリー表示中の画像を含むレスにスクロール
+		function scrollToRes(currenthref) {
+			var $img_a = $(".futaba_lightbox[href='" + currenthref + "']").parent();
+			if ($img_a.length) {
+				var img_position = $img_a.offset().top;
+				$("html,body").animate({
+					scrollTop: img_position
+				}, {
+					duration: SCROLL_DURATION,
+					queue: false
+				});
+				// $("html,body").scrollTop(img_position);
+			}
 		}
 	}
 
