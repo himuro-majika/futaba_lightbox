@@ -57,74 +57,29 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 		add_class_res();
 
-		// setInterval(function() {
-		// 	add_class_res();
-		// }, 2000);
-		
-		/**
-		 * 続きを読むで読み込まれたレスを監視
-		 */
 		observeInserted();
+		// 続きを読むで挿入される要素を監視
 		function observeInserted() {
 			// 対象ノードを選択
-			var target = document.querySelector("html > body > form[action]:not([enctype])");
-			if (document.querySelector(".d6")) {
-				target = document.querySelector(".d6"); // futaboard
+			var target = $("html > body > form[action]:not([enctype])").get(0);
+			if ($(".d6").length) {
+				target = $(".d6").get(0); // futaboard
 			}
-			// オブザーバの設定
-			var config = { childList: true };
 			var observer = new MutationObserver(function(mutations) {
 				mutations.forEach(function(mutation) {
-					add_class_res_inserted(mutation.addedNodes);
+					// NodelistをjQueryオブジェクトに変換
+					var nodes = $(mutation.addedNodes);
+					add_class_res_inserted(nodes);
 				});
 			});
-			observer.observe(target, config);
+			observer.observe(target, { childList: true });
 		}
 		
 		// 追加されたレスに属性を追加
 		function add_class_res_inserted(nodes) {
-			//  var Start = new Date().getTime();//count parsing time
-			var img_parent;
-			if (!$("#master").length) {
-				// 赤福
-				if ( nodes.length &&
-					nodes[0].tagName == "TABLE" &&
-					nodes[0].querySelector("td > a > img") ) {
-						img_parent = nodes[0].querySelector("td > a > img").parentNode;
-						console.log(img_parent);
-						img_parent.className = "futaba_lightbox";
-						img_parent.setAttribute("rel", "futaba_lightbox_gallery");
-				}
-			} else {
-				// ふたクロ
-				if( nodes.length && nodes[0].tagName == "TABLE" ) {
-					for (var i = 0; i < nodes.length; ++i) {
-						console.log(nodes[i]);
-						if (nodes[i].querySelector("td > a > img")) {
-							img_parent = nodes[i].querySelector("td > a > img").parentNode;
-							console.log(img_parent);
-							img_parent.className = "futaba_lightbox";
-							img_parent.setAttribute("rel", "futaba_lightbox_gallery");
-						}
-					}
-				}
-				else if ( nodes.length && nodes[0].tagName == "DIV" ) {
-					// 続きを読む
-					var children = nodes[0].childNodes;
-					for (var j = 0; j < children.length; j++) {
-						console.log(children[j]);
-						if ( children[j].tagName == "TABLE" &&
-							children[j].querySelector("td > a > img") ) {
-							img_parent = children[j].querySelector("td > a > img").parentNode;
-							console.log(img_parent);
-							img_parent.className = "futaba_lightbox";
-							img_parent.setAttribute("rel", "futaba_lightbox_gallery");
-						}
-					}
-					
-				}
-			}
-			//  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
+			var img_parent = nodes.find("td > a > img").parent();
+			img_parent.addClass("futaba_lightbox");
+			img_parent.attr("rel", "futaba_lightbox_gallery");
 		}
 		
 		function add_class_res() {
