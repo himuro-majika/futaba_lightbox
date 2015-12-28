@@ -15,6 +15,7 @@
 // @grant       GM_getResourceText
 // @grant       GM_getResourceURL
 // @grant       GM_addStyle
+// @run-at      document-idle
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAPUExURYv4i2PQYy2aLUe0R////zorx9oAAAAFdFJOU/////8A+7YOUwAAAElJREFUeNqUj1EOwDAIQoHn/c88bX+2fq0kRsAoUXVAfwzCttWsDWzw0kNVWd2tZ5K9gqmMZB8libt4pSg6YlO3RnTzyxePAAMAzqMDgTX8hYYAAAAASUVORK5CYII=
 // ==/UserScript==
 this.$ = this.jQuery = jQuery.noConflict(true);
@@ -43,22 +44,26 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		setup_fancybox();
 		// console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
 	}
-	// スレ内の画像にクラス、rel属性を追加する
+	// スレ内の画像にクラス、rel属性を付加する
 	function add_class_and_rel() {
-		// ふたクロ
-		if ($("#master").length) {
-			var FUTAKURO = true;
-		}
-		// futaboard
-		if ($("#threadsbox").length) {
-			var FUTABOARD = true;
-		}
+		var AKAHUKU = false, FUTAKURO = false, FUTABOARD = false;
+		// 赤福が有効か
+		if ($("#akahuku_thumbnail").length) { AKAHUKU = true; }
+		// ふたクロが有効か
+		if ($("#master").length) { FUTAKURO = true; }
+		// futaboardか
+		if ($("#threadsbox").length) { FUTABOARD = true; }
 		add_class_and_rel_Thread();
 		add_class_and_rel_Res();
-		removeAkahukuThrop();
-		observeInserted();
+		if (AKAHUKU || FUTAKURO) {
+			observeInserted();
+		}
 		// スレ画
 		function add_class_and_rel_Thread() {
+			var $attc = $("#akahuku_throp_thumbnail_container");
+			if (AKAHUKU && $attc.length) {
+				removeAkahukuThrop();
+			}
 			var $sure_a = $("body > form > a > img").parent();
 			if (FUTAKURO) { // ふたクロ
 				$sure_a = $("#master > a > img").parent();
@@ -66,8 +71,18 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			if (FUTABOARD) { // futaboard
 				$sure_a = $(".d7 > a > img").parent();
 			}
-			$sure_a.addClass("futaba_lightbox");
-			$sure_a.attr("rel", "futaba_lightbox_gallery");
+			addAttr($sure_a);
+			// 赤福操作パネル対策	
+			function removeAkahukuThrop() {
+				var observer = new MutationObserver(function(mutations) {
+					mutations.forEach(function(mutation) {
+						removeAttr($(mutation.addedNodes));
+						// 監視を中止
+						observer.disconnect();
+					});
+				});
+				observer.observe($attc.get(0), { childList: true });
+			}
 		}
 		// レス画像
 		function add_class_and_rel_Res() {
@@ -76,18 +91,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			if (FUTABOARD) { // futaboard
 				$res_a = $(".d6 > table img").parent();
 			}
-			$res_a.addClass('futaba_lightbox');
-			$res_a.attr("rel", "futaba_lightbox_gallery");
+			addAttr($res_a);
 			//  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
-		}
-		// 赤福操作パネル対策	
-		// TODO:不完全
-		function removeAkahukuThrop() {
-			var $attb = $("#akahuku_throp_thumbnail_button[rel='futaba_lightbox_gallery']");
-			if ($attb.length) {
-				$attb.removeClass("futaba_lightbox");
-				$attb.attr("rel", "");
-			}
 		}
 		// 続きを読むで挿入される要素を監視
 		function observeInserted() {
@@ -103,11 +108,22 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			});
 			observer.observe(target, { childList: true });
 		}
-		// 追加されたレスに属性を追加
+		// 挿入されたレスに属性を付加
 		function add_class_res_inserted($nodes) {
-			var img_parent = $nodes.find("td > a > img").parent();
-			img_parent.addClass("futaba_lightbox");
-			img_parent.attr("rel", "futaba_lightbox_gallery");
+			//  var Start = new Date().getTime();//count parsing time
+			var $res_a_inserted = $nodes.find("td > a > img").parent();
+			addAttr($res_a_inserted);
+			//  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
+		}
+		// ノードにクラス、属性を付加
+		function addAttr(node) {
+			node.addClass("futaba_lightbox");
+			node.attr("rel", "futaba_lightbox_gallery");
+		}
+		// ノードからfancyboxクラス、属性を削除
+		function removeAttr(node) {
+			node.removeClass("futaba_lightbox");
+			node.attr("rel", "");
 		}
 	}
 	// CSSを設定
