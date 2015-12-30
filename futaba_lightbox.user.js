@@ -151,6 +151,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	// fancyboxの設定
 	function setup_fancybox() {
 		$(".futaba_lightbox").fancybox({
+			minWidth : "300", // 画像の最小幅
 			margin: 15, //画像外側のスペース
 			padding: 5, //画像内側のスペース(白枠部)
 			openEffect: "none", //開く時のエフェクト
