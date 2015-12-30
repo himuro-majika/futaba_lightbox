@@ -2,6 +2,7 @@
 // @name        futaba lightbox
 // @namespace   https://github.com/himuro-majika
 // @description ふたばの画像表示をギャラリー風にしちゃう
+// @author      himuro_majika
 // @include     http://*.2chan.net/*/res/*
 // @include     http://board.futakuro.com/*/res/*
 // @exclude     http://img.2chan.net/*/res/*
@@ -16,6 +17,7 @@
 // @grant       GM_getResourceURL
 // @grant       GM_addStyle
 // @run-at      document-idle
+// @license     MIT
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAPUExURYv4i2PQYy2aLUe0R////zorx9oAAAAFdFJOU/////8A+7YOUwAAAElJREFUeNqUj1EOwDAIQoHn/c88bX+2fq0kRsAoUXVAfwzCttWsDWzw0kNVWd2tZ5K9gqmMZB8libt4pSg6YlO3RnTzyxePAAMAzqMDgTX8hYYAAAAASUVORK5CYII=
 // ==/UserScript==
 this.$ = this.jQuery = jQuery.noConflict(true);
