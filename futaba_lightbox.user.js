@@ -12,7 +12,7 @@
 // @require     https://github.com/fancyapps/fancyBox/raw/master/source/jquery.fancybox.js
 // @resource    fancyboxCSS https://github.com/fancyapps/fancyBox/raw/master/source/jquery.fancybox.css
 // @resource    fancyboxSprite https://github.com/fancyapps/fancyBox/raw/master/source/fancybox_sprite.png
-// @version     1.2.1
+// @version     1.2.2
 // @grant       GM_getResourceText
 // @grant       GM_getResourceURL
 // @grant       GM_addStyle
@@ -66,9 +66,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			if (AKAHUKU && $attc.length) {
 				removeAkahukuThrop();
 			}
-			var $sure_a = $(".thre").length
-				? $(".thre > a > img").parent()
-				: $("body > form > a > img").parent();
+			var $sure_a = $(".thre").length ?
+				$(".thre > a > img").parent() :
+				$("body > form > a > img").parent();
 			if (FUTAKURO) { // ふたクロ
 				$sure_a = $("#master > a > img").parent();
 			}
@@ -76,7 +76,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				$sure_a = $(".d7 > a > img").parent();
 			}
 			addAttr($sure_a);
-			// 赤福操作パネル対策	
+			// 赤福操作パネル対策
 			function removeAkahukuThrop() {
 				var observer = new MutationObserver(function(mutations) {
 					mutations.forEach(function(mutation) {
