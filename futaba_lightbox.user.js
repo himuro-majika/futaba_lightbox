@@ -66,7 +66,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			if (AKAHUKU && $attc.length) {
 				removeAkahukuThrop();
 			}
-			var $sure_a = $("body > form > a > img").parent();
+			var $sure_a = $(".thre").length
+				? $(".thre > a > img").parent()
+				: $("body > form > a > img").parent();
 			if (FUTAKURO) { // ふたクロ
 				$sure_a = $("#master > a > img").parent();
 			}
