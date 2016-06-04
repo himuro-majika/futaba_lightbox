@@ -35,6 +35,8 @@ Opera(ver.15+) + [Tampermonkey](https://addons.opera.com/extensions/details/tamp
 このUserscriptには[FancyBox](http://fancyapps.com/fancybox/)を使用しています
 
 ## 更新履歴
+* v1.2.1 2016-06-04
+  - ふたばのレイアウト変更に対応
 * v1.2.0 2015-12-31
   - サイズの小さい画像を少し大きく表示するようにしました
   - パフォーマンスを改善しました  
