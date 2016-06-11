@@ -5,10 +5,9 @@
 ふたば☆ちゃんねるのスレ内の画像をページ内でギャラリー風に表示します  
 マウスホイールやカーソルキーでの前後移動も可能です  
 
-Firefox + [Greasemonkey](https://addons.mozilla.org/ja/firefox/addon/greasemonkey/),  
-Chrome + [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo),  
-Opera(ver.15+) + [Tampermonkey](https://addons.opera.com/extensions/details/tampermonkey-beta/)  
-で動作確認済みです
+Firefoxの場合、[Greasemonkey](https://addons.mozilla.org/ja/firefox/addon/greasemonkey/)を先にインスールしてからスクリプトをインストールして下さい  
+Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)を先にインスールしてからスクリプトをインストールして下さい  
+Opera(ver.15+)の場合、[Tampermonkey](https://addons.opera.com/extensions/details/tampermonkey-beta/)を先にインスールしてからスクリプトをインストールして下さい  
 
 ※このUserscriptは[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)と[ふたクロ](http://futakuro.com/)に対応しています
 
@@ -35,25 +34,27 @@ Opera(ver.15+) + [Tampermonkey](https://addons.opera.com/extensions/details/tamp
 このUserscriptには[FancyBox](http://fancyapps.com/fancybox/)を使用しています
 
 ## 更新履歴
+* v1.2.3 2016-06-11
+	- 赤福の続きを読むでよ見込まれたレスに反応しなくなっていたのを修正
 * v1.2.2 2016-06-04
-  - ふたばのレイアウト変更に対応
+	- ふたばのレイアウト変更に対応
 * v1.2.0 2015-12-31
-  - サイズの小さい画像を少し大きく表示するようにしました
-  - パフォーマンスを改善しました  
-    同時に、続きを読むで読み込んだレスに反映されるまでのラグ、及びふたクロの読み込み完了待ちのラグがなくなりました
+	- サイズの小さい画像を少し大きく表示するようにしました
+	- パフォーマンスを改善しました  
+		同時に、続きを読むで読み込んだレスに反映されるまでのラグ、及びふたクロの読み込み完了待ちのラグがなくなりました
 * v1.1.0 2015-12-13
-  - マウスホイールでの前後移動を追加しました
-  - ギャラリーで表示している画像を含むレスに自動的にスクロールするようにしました
-  - 前後のナビゲーションボタンの反応エリアを少し広くしました
-  - ギャラリーの画像をクリックした際に新しいタブで画像を開くようにしました
-  - ふたクロに対応しました
-  - futaBoardに対応しました
-  - 画像のプリロード設定を復活
-  - パフォーマンスを改善しました
+	- マウスホイールでの前後移動を追加しました
+	- ギャラリーで表示している画像を含むレスに自動的にスクロールするようにしました
+	- 前後のナビゲーションボタンの反応エリアを少し広くしました
+	- ギャラリーの画像をクリックした際に新しいタブで画像を開くようにしました
+	- ふたクロに対応しました
+	- futaBoardに対応しました
+	- 画像のプリロード設定を復活
+	- パフォーマンスを改善しました
 * v1.0.1 2015-11-02
-  - 数1000レス程度のレス数の多いスレで画像の開閉が遅くなる現象を修正(黒透過背景をやめました)
-  - ギャラリー表示時のページスクロールを有効に
-  - 前後の画像のプリロードを停止
-  - マージンを微調整
+	- 数1000レス程度のレス数の多いスレで画像の開閉が遅くなる現象を修正(黒透過背景をやめました)
+	- ギャラリー表示時のページスクロールを有効に
+	- 前後の画像のプリロードを停止
+	- マージンを微調整
 * v1.0 2015-10-14
-  - 公開
+	- 公開
