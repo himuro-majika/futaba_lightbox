@@ -100,7 +100,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		}
 		// 続きを読むで挿入される要素を監視
 		function observeInserted() {
-			var target = $("html > body > form[action]:not([enctype])").get(0);
+			var target = $(".thre").length ?
+				$(".thre").get(0) :
+				$("html > body > form[action]:not([enctype])").get(0);
 			if (FUTABOARD) {
 				target = $(".d6").get(0); // futaboard
 			}
