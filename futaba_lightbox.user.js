@@ -4,6 +4,7 @@
 // @description ふたばの画像表示をギャラリー風にしちゃう
 // @author      himuro_majika
 // @include     http://*.2chan.net/*/res/*
+// @include     https://*.2chan.net/*/res/*
 // @include     http://board.futakuro.com/*/res/*
 // @exclude     http://img.2chan.net/*/res/*
 // @exclude     http://dat.2chan.net/*/res/*
