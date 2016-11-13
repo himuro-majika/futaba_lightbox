@@ -34,6 +34,8 @@ Opera(ver.15+)の場合、[Tampermonkey](https://addons.opera.com/extensions/det
 このUserscriptには[FancyBox](http://fancyapps.com/fancybox/)を使用しています
 
 ## 更新履歴
+* v1.2.4 2016-11-13
+	- https対応
 * v1.2.3 2016-06-11
 	- 赤福の続きを読むで読み込まれたレスに反応しなくなっていたのを修正
 * v1.2.2 2016-06-04
