@@ -9,11 +9,11 @@
 // @exclude     http://img.2chan.net/*/res/*
 // @exclude     http://dat.2chan.net/*/res/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
-// @require     https://github.com/fancyapps/fancyBox/raw/master/lib/jquery.mousewheel.pack.js
-// @require     https://github.com/fancyapps/fancyBox/raw/master/source/jquery.fancybox.js
-// @resource    fancyboxCSS https://github.com/fancyapps/fancyBox/raw/master/source/jquery.fancybox.css
-// @resource    fancyboxSprite https://github.com/fancyapps/fancyBox/raw/master/source/fancybox_sprite.png
-// @version     1.2.4
+// @require     https://raw.githubusercontent.com/fancyapps/fancybox/2.1/lib/jquery.mousewheel.pack.js
+// @require     https://raw.githubusercontent.com/fancyapps/fancybox/2.1/source/jquery.fancybox.js
+// @resource    fancyboxCSS https://raw.githubusercontent.com/fancyapps/fancybox/2.1/source/jquery.fancybox.css
+// @resource    fancyboxSprite https://raw.githubusercontent.com/fancyapps/fancybox/2.1/source/fancybox_sprite.png
+// @version     1.2.5
 // @grant       GM_getResourceText
 // @grant       GM_getResourceURL
 // @grant       GM_addStyle
