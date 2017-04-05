@@ -13,7 +13,7 @@
 // @require     https://raw.githubusercontent.com/fancyapps/fancybox/2.1/source/jquery.fancybox.js
 // @resource    fancyboxCSS https://raw.githubusercontent.com/fancyapps/fancybox/2.1/source/jquery.fancybox.css
 // @resource    fancyboxSprite https://raw.githubusercontent.com/fancyapps/fancybox/2.1/source/fancybox_sprite.png
-// @version     1.2.4
+// @version     1.2.5
 // @grant       GM_getResourceText
 // @grant       GM_getResourceURL
 // @grant       GM_addStyle
