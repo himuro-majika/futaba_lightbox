@@ -7,7 +7,9 @@
 // @include     https://*.2chan.net/*/res/*
 // @include     http://board.futakuro.com/*/res/*
 // @exclude     http://img.2chan.net/*/res/*
+// @exclude     https://img.2chan.net/*/res/*
 // @exclude     http://dat.2chan.net/*/res/*
+// @exclude     https://dat.2chan.net/*/res/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @require     https://raw.githubusercontent.com/fancyapps/fancybox/2.1/lib/jquery.mousewheel.pack.js
 // @require     https://raw.githubusercontent.com/fancyapps/fancybox/2.1/source/jquery.fancybox.js
@@ -19,6 +21,7 @@
 // @grant       GM_addStyle
 // @run-at      document-idle
 // @license     MIT
+// @noframes
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAPUExURYv4i2PQYy2aLUe0R////zorx9oAAAAFdFJOU/////8A+7YOUwAAAElJREFUeNqUj1EOwDAIQoHn/c88bX+2fq0kRsAoUXVAfwzCttWsDWzw0kNVWd2tZ5K9gqmMZB8libt4pSg6YlO3RnTzyxePAAMAzqMDgTX8hYYAAAAASUVORK5CYII=
 // ==/UserScript==
 this.$ = this.jQuery = jQuery.noConflict(true);
@@ -49,24 +52,23 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	}
 	// スレ内の画像にクラス、rel属性を付加する
 	function add_class_and_rel() {
-		var AKAHUKU = false, FUTAKURO = false, FUTABOARD = false;
+		var FUTAKURO = false, FUTABOARD = false;
 		// 赤福が有効か
-		if ($("#akahuku_thumbnail").length) { AKAHUKU = true; }
+		setTimeout(function() {
+			if ($("#akahuku_thumbnail").length) {
+				removeAkahukuThrop();
+			}
+		}, 5000)
+
 		// ふたクロが有効か
 		if ($("#master").length) { FUTAKURO = true; }
 		// futaboardか
 		if ($("#threadsbox").length) { FUTABOARD = true; }
 		add_class_and_rel_Thread();
 		add_class_and_rel_Res();
-		if (AKAHUKU || FUTAKURO) {
-			observeInserted();
-		}
+		observeInserted();
 		// スレ画
 		function add_class_and_rel_Thread() {
-			var $attc = $("#akahuku_throp_thumbnail_container");
-			if (AKAHUKU && $attc.length) {
-				removeAkahukuThrop();
-			}
 			var $sure_a = $(".thre").length ?
 				$(".thre > a > img").parent() :
 				$("body > form > a > img").parent();
@@ -77,16 +79,12 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				$sure_a = $(".d7 > a > img").parent();
 			}
 			addAttr($sure_a);
-			// 赤福操作パネル対策
-			function removeAkahukuThrop() {
-				var observer = new MutationObserver(function(mutations) {
-					mutations.forEach(function(mutation) {
-						removeAttr($(mutation.addedNodes));
-						// 監視を中止
-						observer.disconnect();
-					});
-				});
-				observer.observe($attc.get(0), { childList: true });
+		}
+		// 赤福操作パネル対策
+		function removeAkahukuThrop() {
+			var $attb = $("#akahuku_throp_thumbnail_button");
+			if ($attb.length) {
+				removeAttr($attb);
 			}
 		}
 		// レス画像
