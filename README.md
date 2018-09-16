@@ -34,6 +34,8 @@ Opera(ver.15+)の場合、[Tampermonkey](https://addons.opera.com/extensions/det
 このUserscriptには[FancyBox](http://fancyapps.com/fancybox/)を使用しています
 
 ## 更新履歴
+* v1.2.6 2018-09-16
+	- 赤福WE版に暫定対応
 * v1.2.5 2017-04-05
 	- fancyBoxのrequireソースへのURLのリンク切れを修正
 * v1.2.4 2016-11-13
