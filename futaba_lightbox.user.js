@@ -110,24 +110,20 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			}
 			if($(".c9-1").length) return;
 			var observer = new MutationObserver(function(mutations) {
+				var imgEle;
 				mutations.forEach(function(mutation) {
 					var $nodes = $(mutation.addedNodes);
-					add_class_res_inserted($nodes);
+					var $res_a_inserted = $nodes.find("td > a > img");
+					if ($res_a_inserted.length > 0) {
+						imgEle = $res_a_inserted;
+						addAttr($res_a_inserted.parent());
+					}
 				});
+				if (imgEle && imgEle.length > 0) {
+					reopenFancybox();
+				}
 			});
 			observer.observe(target, { childList: true });
-		}
-		// 挿入されたレスに属性を付加
-		function add_class_res_inserted($nodes) {
-			//  var Start = new Date().getTime();//count parsing time
-			var $res_a_inserted = $nodes.find("td > a > img").parent();
-			addAttr($res_a_inserted);
-
-			if ($res_a_inserted.length == 0) return;
-
-			reopenFancybox();
-
-			//  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
 		}
 		// ノードにクラス、属性を付加
 		function addAttr(node) {
