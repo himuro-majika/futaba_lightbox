@@ -41,6 +41,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	// スクロールのなめらかさ
 	var SCROLL_DURATION = 100;
 
+	var options;
+	var currentidx;
+	var reopenflag = false;
+
 	init();
 
 	function init() {
@@ -78,14 +82,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			if (FUTABOARD) { // futaboard
 				$sure_a = $(".d7 > a > img").parent();
 			}
-			addAttr($sure_a);
-		}
-		// 赤福操作パネル対策
-		function removeAkahukuThrop() {
-			var $attb = $("#akahuku_throp_thumbnail_button");
-			if ($attb.length) {
-				removeAttr($attb);
+			if($(".c9-1").length) {
+				$sure_a = $(".c9-1").parent();
 			}
+			addAttr($sure_a);
 		}
 		// レス画像
 		function add_class_and_rel_Res() {
@@ -93,6 +93,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			var $res_a = $(".rtd > a > img").parent();
 			if (FUTABOARD) { // futaboard
 				$res_a = $(".d6 > table img").parent();
+			}
+			if($(".c9-10").length) {
+				$res_a = $(".c9-10 a > img").parent();
 			}
 			addAttr($res_a);
 			//  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
@@ -105,6 +108,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			if (FUTABOARD) {
 				target = $(".d6").get(0); // futaboard
 			}
+			if($(".c9-1").length) return;
 			var observer = new MutationObserver(function(mutations) {
 				mutations.forEach(function(mutation) {
 					var $nodes = $(mutation.addedNodes);
@@ -118,6 +122,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			//  var Start = new Date().getTime();//count parsing time
 			var $res_a_inserted = $nodes.find("td > a > img").parent();
 			addAttr($res_a_inserted);
+
+			if ($res_a_inserted.length == 0) return;
+
+			reopenFancybox();
+
 			//  console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
 		}
 		// ノードにクラス、属性を付加
@@ -125,11 +134,18 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			node.addClass("futaba_lightbox");
 			node.attr("rel", "futaba_lightbox_gallery");
 		}
-		// ノードからfancyboxクラス、属性を削除
-		function removeAttr(node) {
-			node.removeClass("futaba_lightbox");
-			node.attr("rel", "");
+	}
+	// 赤福操作パネル対策
+	function removeAkahukuThrop() {
+		var $attb = $("#akahuku_throp_thumbnail_button");
+		if ($attb.length) {
+			removeAttr($attb);
 		}
+	}
+	// ノードからfancyboxクラス、属性を削除
+	function removeAttr(node) {
+		node.removeClass("futaba_lightbox");
+		node.attr("rel", "");
 	}
 	// CSSを設定
 	function add_css() {
@@ -155,7 +171,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	}
 	// fancyboxの設定
 	function setup_fancybox() {
-		$(".futaba_lightbox").fancybox({
+		options = {
 			minWidth : "300", // 画像の最小幅
 			margin: 15, //画像外側のスペース
 			padding: 5, //画像内側のスペース(白枠部)
@@ -192,11 +208,22 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				// if (previous) {
 				//     console.info( 'Navigating: ' + (current.index > previous.index ? 'right' : 'left') );
 				// }
+				if ($("#akahuku_thumbnail").length) {
+					removeAkahukuThrop();
+				}
+				currentidx = current.index;
 				if (USE_SCROLL) {
-					scrollToRes(current.href);
+					if (reopenflag) {
+						reopenflag = false;
+					} else {
+						scrollToRes(current.href);
+					}
 				}
 			}
-		});
+		};
+
+		$(".futaba_lightbox").fancybox(options);
+
 		// ギャラリー表示中の画像を含むレスにスクロール
 		function scrollToRes(currenthref) {
 			var $img_a = $(".futaba_lightbox[href='" + currenthref + "']").parent();
@@ -213,4 +240,13 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		}
 	}
 
+	function reopenFancybox() {
+		if ($(".fancybox-opened").length == 0) return;
+
+		var group = $(".futaba_lightbox");
+		options.index = currentidx;
+		reopenflag = true;
+
+		$.fancybox.open(group, options);
+	}
 })(jQuery);
