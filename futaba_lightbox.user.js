@@ -40,6 +40,13 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var USE_SCROLL = true;
 	// スクロールのなめらかさ
 	var SCROLL_DURATION = 100;
+	// 動画の幅
+	var VIDEO_WIDTH = 1280;
+	// 動画の高さ
+	var VIDEO_HEIGHT = 720;
+	// 動画の自動再生
+	var VIDEO_AUTOPLAY = false;
+
 
 	var options;
 	var currentidx;
@@ -120,7 +127,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 					}
 				});
 				if (imgEle && imgEle.length > 0) {
-					reopenFancybox();
+					var video = getIframeVideo();
+					if (video.length == 0 || (!VIDEO_AUTOPLAY && video[0].paused)) reopenFancybox();
 				}
 			});
 			observer.observe(target, { childList: true });
@@ -129,6 +137,12 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		function addAttr(node) {
 			node.addClass("futaba_lightbox");
 			node.attr("rel", "futaba_lightbox_gallery");
+			// 動画
+			node.each(function() {
+				if ($(this).attr("href").match(/\.(webm|mp4)$/)) {
+					$(this).addClass("fancybox.html");
+				}
+			})
 		}
 	}
 	// 赤福操作パネル対策
@@ -158,6 +172,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			".fancybox-nav {" +
 			"  background: transparent;" +
 			"  width: 45%;" +
+			"  height: 90%;" +
 			"}" +
 			// ふたクロ書き込みウィンドウ対応
 			".fancybox-opened {" +
@@ -168,14 +183,17 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	// fancyboxの設定
 	function setup_fancybox() {
 		options = {
-			minWidth : "300", // 画像の最小幅
+			autoSize: false,
+			width: VIDEO_WIDTH,	//動画の幅
+			height: VIDEO_HEIGHT,	//動画の高さ
+			minWidth : 300, // 画像の最小幅
 			margin: 15, //画像外側のスペース
 			padding: 5, //画像内側のスペース(白枠部)
 			openEffect: "none", //開く時のエフェクト
 			closeEffect: "none", //閉じる時のエフェクト
 			prevEffect: "none", //次移動時のエフェクト
 			nextEffect: "none", //前移動時のエフェクト
-			preload: "2", //プリロードする画像の数
+			preload: 3, //プリロードする画像の数
 			mouseWheel: USE_MOUSEWHEEL,
 			closeBtn: USE_CLOSEBTN, //閉じるボタン
 			loop: USE_LOOP, //末尾から先頭へのループ
@@ -197,16 +215,33 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				next: '<a title="次" class="fancybox-nav fancybox-next"><span></span></a>',
 				prev: '<a title="前" class="fancybox-nav fancybox-prev"><span></span></a>'
 			},
+			// 読み込み前
+			beforeLoad: function() {
+				if (this.element[0].id == "akahuku_throp_thumbnail_button") {
+					removeAkahukuThrop();
+					return false;
+				}
+			},
 			// 画像読み込み後イベント
 			afterLoad: function(current, previous) {
-				// console.info( 'Current: ' + current.href );
-				// console.info( 'Previous: ' + (previous ? previous.href : '-') );
-				// if (previous) {
-				//     console.info( 'Navigating: ' + (current.index > previous.index ? 'right' : 'left') );
-				// }
-				if ($("#akahuku_thumbnail").length) {
-					removeAkahukuThrop();
+				// 動画
+				if (current.type == "html") {
+					var ext = current.href.match(/\.(webm|mp4)$/)[1];
+					var autoplay = VIDEO_AUTOPLAY ? "autoplay=''" : "";
+					var videohtml = "<video " + autoplay + " controls='' style='width: 100%; height: 100%; background-color: #000;' class='extendWebm'>";
+					if (ext == "webm") {
+						videohtml += "<source src='" + current.href + "' type='video/webm'>";
+					}
+					videohtml += "<source src='" + current.href + "' type='video/mp4'></video>";
+					current.content = videohtml;
+					//デフォルトのプレイヤーを閉じる
+					var cancelbutton = $(current.element[0]).parent().find(".cancelbk");
+					var event = new Event("click");
+					if (cancelbutton[0]) {
+						cancelbutton[0].dispatchEvent(event);
+					}
 				}
+
 				currentidx = current.index;
 				if (USE_SCROLL) {
 					if (reopenflag) {
@@ -234,6 +269,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				// $("html,body").scrollTop(img_position);
 			}
 		}
+	}
+
+	function getIframeVideo() {
+		var video = $(".fancybox-opened video")
+		return video;
 	}
 
 	function reopenFancybox() {
