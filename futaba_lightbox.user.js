@@ -6,10 +6,6 @@
 // @include     http://*.2chan.net/*/res/*
 // @include     https://*.2chan.net/*/res/*
 // @include     http://board.futakuro.com/*/res/*
-// @exclude     http://img.2chan.net/*/res/*
-// @exclude     https://img.2chan.net/*/res/*
-// @exclude     http://dat.2chan.net/*/res/*
-// @exclude     https://dat.2chan.net/*/res/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @require     https://raw.githubusercontent.com/fancyapps/fancybox/2.1/lib/jquery.mousewheel.pack.js
 // @require     https://raw.githubusercontent.com/fancyapps/fancybox/2.1/source/jquery.fancybox.js
