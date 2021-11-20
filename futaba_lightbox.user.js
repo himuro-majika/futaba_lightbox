@@ -7,10 +7,10 @@
 // @include     https://*.2chan.net/*/res/*
 // @include     http://board.futakuro.com/*/res/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
-// @require     https://raw.githubusercontent.com/fancyapps/fancybox/2.1/lib/jquery.mousewheel.pack.js
-// @require     https://raw.githubusercontent.com/fancyapps/fancybox/2.1/source/jquery.fancybox.js
-// @resource    fancyboxCSS https://raw.githubusercontent.com/fancyapps/fancybox/2.1/source/jquery.fancybox.css
-// @resource    fancyboxSprite https://raw.githubusercontent.com/fancyapps/fancybox/2.1/source/fancybox_sprite.png
+// @require     https://cdn.jsdelivr.net/npm/fancybox@2.1.5/lib/jquery.mousewheel.pack.js
+// @require     https://cdn.jsdelivr.net/npm/fancybox@2.1.5/dist/js/jquery.fancybox.js
+// @resource    fancyboxCSS https://cdn.jsdelivr.net/npm/fancybox@2.1.5/dist/css/jquery.fancybox.css
+// @resource    fancyboxSprite https://cdn.jsdelivr.net/npm/fancybox@2.1.5/dist/img/fancybox_sprite.png
 // @version     1.2.6
 // @grant       GM_getResourceText
 // @grant       GM_getResourceURL
