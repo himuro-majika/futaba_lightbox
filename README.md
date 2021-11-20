@@ -5,7 +5,7 @@
 ふたば☆ちゃんねるのスレ内の画像をページ内でギャラリー風に表示します  
 マウスホイールやカーソルキーでの前後移動も可能です  
 
-Firefoxの場合、[Greasemonkey](https://addons.mozilla.org/ja/firefox/addon/greasemonkey/)を先にインスールしてからスクリプトをインストールして下さい  
+Firefoxの場合、[Tampermonkey](https://addons.mozilla.org/ja/firefox/addon/tampermonkey/)を先にインスールしてからスクリプトをインストールして下さい  
 Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)を先にインスールしてからスクリプトをインストールして下さい  
 Opera(ver.15+)の場合、[Tampermonkey](https://addons.opera.com/extensions/details/tampermonkey-beta/)を先にインスールしてからスクリプトをインストールして下さい  
 
@@ -23,7 +23,11 @@ Opera(ver.15+)の場合、[Tampermonkey](https://addons.opera.com/extensions/det
 
 ※ギャラリー表示せず通常通り直で画像を開くときはサムネイルを中ボタンクリックするかサムネイルの上のファイル名部分をクリックしてください
 
-※画像レス機能がない鯖(img,dat)はスレ画にしか効果がないため動作対象から除外していますが使用したい場合はスクリプトマネージャーのユーザー設定から追加してください。
+~~※画像レス機能がない鯖(img,dat)はスレ画にしか効果がないため動作対象から除外していますが使用したい場合はスクリプトマネージャーのユーザー設定から追加してください。~~
+
+※ふたばデフォルトの動画プレイヤーは無効になります。
+
+※[futaba WebM inline player](https://greasyfork.org/ja/scripts/15695-futaba-webm-inline-player)と併用すると動画再生の動作がおかしくなる場合があります。その場合はfutaba WebM inline playerを無効にしてください。
 
 ## 制限事項
 
@@ -31,9 +35,15 @@ Opera(ver.15+)の場合、[Tampermonkey](https://addons.opera.com/extensions/det
 
 ## ライセンス
 
-このUserscriptには[FancyBox](http://fancyapps.com/fancybox/)を使用しています
+このUserscriptには[FancyBox v2](http://fancyapps.com/fancybox/)を使用しています
 
 ## 更新履歴
+* v1.3.0 
+	- ギャラリー表示で動画の再生に対応  
+		※ふたばデフォルトの動画プレイヤーは無効になります
+	- 動画コントロールに被らないように前後のナビゲーションボタンの反応エリアの高さを少し狭くしました
+	- ギャラリー表示中に続きを読むで画像が追加された場合ギャラリーを自動的に開き直して表示できるように(動画再生中を除く)
+	- Fancyboxライブラリの参照先をCDNに変更しました
 * v1.2.6 2018-09-16
 	- 赤福WE版に暫定対応
 * v1.2.5 2017-04-05
