@@ -11,7 +11,7 @@
 // @require     https://cdn.jsdelivr.net/npm/fancybox@2.1.5/dist/js/jquery.fancybox.js
 // @resource    fancyboxCSS https://cdn.jsdelivr.net/npm/fancybox@2.1.5/dist/css/jquery.fancybox.css
 // @resource    fancyboxSprite https://cdn.jsdelivr.net/npm/fancybox@2.1.5/dist/img/fancybox_sprite.png
-// @version     1.3.0
+// @version     1.4.0
 // @grant       GM_getResourceText
 // @grant       GM_getResourceURL
 // @grant       GM_addStyle
@@ -54,6 +54,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		add_class_and_rel();
 		add_css();
 		setup_fancybox();
+		setKeyDownEvent();
 		// console.log('Parsing : '+((new Date()).getTime()-Start) +'msec');//log parsing time
 	}
 	// スレ内の画像にクラス、rel属性を付加する
@@ -171,7 +172,29 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"}" +
 			// ふたクロ書き込みウィンドウ対応
 			".fancybox-opened {" +
-			"  z-index: 2000000013;" +
+			"  z-index: 2000000016;" +
+			"}" +
+			// 画像一覧
+			".futaba_lightbox_image_list_overlay img {" +
+			"  margin: 0;" +
+			"  box-shadow: 0 0 15px 5px #222;" +
+			"}" +
+			".futaba-lightbox-image-list-view-button:hover div {" +
+			"  visibility: visible;" +
+			"}" +
+			".futaba-lightbox-image-list-view-button div {" +
+			"  visibility: hidden;" +
+			"  margin: 20px auto;" +
+			"  width: 32px;" +
+			"  height: 32px;" +
+			"  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAACXBIWXMAAAsTAAALEwEAmpwYAAADMElEQVRIiZ2VXWhbZRyHn3NykjT9sEvV0tXWacXPihO9qDqFwdAhKluHdHrj9ELoovNCVKjWL5h4oWU3onjjqMjEiRMJIgiK4DqGboN2sxsZTrtsadOs7dYkS2tO+vOibz6XudT//+L9cd73eU7O4T1vLKqUermL+2hnNSlinOIn9lqZaivBqkAd+gnp9jEOEmOSRtrpYgPNsJuw9W11SRF/Sn/MaEA3iLL2aqN+0JLcL6LByluW4h/nNKRVFXCxN2hcuUi8B7uqROGkNl0WXu4mheXGYo/huUShj5K65wo4QpaGlY3+cgdOmUJ9OfXWgCPk04gyR2kqUcijY7tqxBFq0wWdGKABOy8IzSpoJoOaNf2cGT/XTpMGC4q3lI4+fCN+LLCB0BBzhW0RNO03YwMBk+oKjzxEpuPdbQSwwVavuvdcYX9UVpownY9wFV6wufMYf61QAN/RcT9B/ODwwIEy9zaTfjPpLClGAThesm4E+OChV+NccGiPlUw0MGzSdj4BYB9/8zIA7/F7YV2CLC3XEwCbtqkVPwBAnOZW/GCz6P9fgjpSwgsOsfbO4uUlxk06b9IZpk1KlOBeriZxERscJtb0FCcy7DJpzKQJkswAmFe5XGuwOBIHQM9Pyy7ssRblq9+M32jIpJ0l2/lFzc3zDN1gs+9a1q34DWzi0Aky/AO2NcNXoRXit7GegxFSLIAD7O3b+iGHAcgSNotOm3SYuEmRguB9Tp5+cz/nyR+02e8PyKn5c35USxrcw5PcSqMRnL3JjX5aI36L5vTzKP08SBu+/G+yElvcqXdqwLsU0fEor/AEN9NYOFIAz/RL2fiXqvtPfL3OKXKm9W36WEtL+blo4Rt9fCH6p56+DHydPpOrkXFeYyv30rp8HpWWhW9758Rud3FMb6i7BK3XFg0rrVNTg1+zg83cXYpbZQov9c927Qh1bVzVkWTS/LW1YuvIyR+Pvv4r54gRI0GaLEKVArDw4KeRlhfWrutpWt18TcqdnJ9ODhwiwzyzzDDLPAu4y/ClArCwcPBRTwMBAviwWSLLAhdJk2GxeO/qgrzExoODg42NyJEjh0uuHAb4F7CMKxAZTkkkAAAAAElFTkSuQmCC);" +
+			"}" +
+			".futaba-lightbox-image-list-view-button {" +
+			"  cursor: pointer;" +
+			"  position: absolute;" +
+			"  top: 0;" +
+			"  width: 100%;" +
+			"  height: 60px;" +
 			"}"
 		);
 	}
@@ -199,12 +222,16 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 					fixed: false, //固定表示(falseでスクロール可能)
 					css: {
 						// "background" : "rgba(0,0,0,0.85)"     //背景色
-						background: "none"
+						"background": "none",
+						"z-index": "2000000015"
 					}
 				}
 			},
 			// テンプレート
 			tpl: {
+				wrap: '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-inner"></div></div>' +
+				'<div title="画像一覧" class="futaba-lightbox-image-list-view-button"><div></div>' +
+				'</div></div></div>',
 				image: '<a href="{href}" target="_blank"><img class="fancybox-image" src="{href}" alt="" /></a>',
 				error: '<p class="fancybox-error">画像がないよ<br>すでに削除されてるかも</p>',
 				next: '<a title="次" class="fancybox-nav fancybox-next"><span></span></a>',
@@ -236,6 +263,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 						cancelbutton[0].dispatchEvent(event);
 					}
 				}
+				makeImageListButton();
 
 				currentidx = current.index;
 				if (USE_SCROLL) {
@@ -279,5 +307,80 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		reopenflag = true;
 
 		$.fancybox.open(group, options);
+	}
+
+	function makeImageListButton() {
+		var button = $(".futaba-lightbox-image-list-view-button");
+		button.click(() => {
+			showImageListView();
+		});
+	}
+
+	function showImageListView() {
+		closeImageListView();
+		$.fancybox.close();
+		var imageList = $(".thre a img").parent().clone();
+		imageList.attr("rel", "futaba_lightbox_image_list");
+		// imageList.each(() => {
+		// 	$(this).css({
+		// 		"flex": "auto"
+		// 	})
+		// })
+		var imageListContainer = $("<div>");
+		imageListContainer.addClass("futaba_lightbox_image_list_container");
+		imageListContainer.css({
+			"width": "auto",
+			"height": "100%",
+			"overflow-y": "scroll",
+			"padding": "35px 25px",
+			"display": "flex",
+			"flex-wrap": "wrap",
+			"justify-content": "space-around",
+			"align-items": "center",
+			"row-gap": "20px",
+			"column-gap": "20px"
+		});
+		imageListContainer.click((event) => {
+			if ($(event.target)[0].className == "futaba_lightbox_image_list_container") {
+				closeImageListView();
+			}
+		});
+		imageListContainer.append(imageList);
+
+		var imageListOverLay = $("<div>");
+		imageListOverLay.addClass("futaba_lightbox_image_list_overlay");
+		imageListOverLay.css({
+			"position": "fixed",
+			"top": "0",
+			"bottom": "0",
+			"left": "0",
+			"right": "0",
+			"background": "rgba(0, 0, 0, 0.8)",
+			"z-index": "2000000014",
+		});
+		imageListOverLay.append(imageListContainer);
+
+		var body = $("body");
+		body.css({
+			"overflow": "hidden"
+		});
+		body.append(imageListOverLay);
+	}
+
+	function closeImageListView() {
+		var listoverlay = $(".futaba_lightbox_image_list_overlay");
+		if (listoverlay.length == 0) return;
+		listoverlay.remove();
+		$("body").css({
+			"overflow": ""
+		})
+	}
+
+	function setKeyDownEvent() {
+		document.addEventListener("keydown", (e) => {
+			if (e.key == "Escape" && $(".fancybox-opened").length == 0) {
+				closeImageListView();
+			}
+		});
 	}
 })(jQuery);
