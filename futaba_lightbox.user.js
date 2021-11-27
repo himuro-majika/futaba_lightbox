@@ -11,7 +11,7 @@
 // @require     https://cdn.jsdelivr.net/npm/fancybox@2.1.5/dist/js/jquery.fancybox.js
 // @resource    fancyboxCSS https://cdn.jsdelivr.net/npm/fancybox@2.1.5/dist/css/jquery.fancybox.css
 // @resource    fancyboxSprite https://cdn.jsdelivr.net/npm/fancybox@2.1.5/dist/img/fancybox_sprite.png
-// @version     1.3.0
+// @version     1.4.0
 // @grant       GM_getResourceText
 // @grant       GM_getResourceURL
 // @grant       GM_addStyle
