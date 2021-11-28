@@ -266,12 +266,19 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				makeImageListButton();
 
 				currentidx = current.index;
-				if (USE_SCROLL) {
-					if (reopenflag) {
-						reopenflag = false;
-					} else {
-						scrollToRes(current.href);
-					}
+				if (reopenflag) {
+					reopenflag = false;
+				} else if (USE_SCROLL){
+					scrollToRes(current.href);
+				}
+			},
+			onPlayStart: function() {
+				// console.log("onplaystart");
+			},
+			onPlayEnd: function() {
+				// console.log("onplayend");
+				if (reopenflag) {
+					$.fancybox.play();
 				}
 			}
 		};
