@@ -178,6 +178,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			".futaba_lightbox_image_list_overlay img {" +
 			"  margin: 0;" +
 			"  box-shadow: 0 0 15px 5px #222;" +
+			"  max-width: 20vw;" +
+			"  width: auto;" +
+			"  max-height: 20vh;" +
+			"  height: auto;" +
 			"}" +
 			".futaba-lightbox-image-list-view-button:hover div {" +
 			"  visibility: visible;" +
@@ -339,13 +343,13 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"width": "auto",
 			"height": "100%",
 			"overflow-y": "scroll",
-			"padding": "35px 25px",
+			"padding": "5px 5px",
 			"display": "flex",
 			"flex-wrap": "wrap",
 			"justify-content": "space-around",
 			"align-items": "center",
-			"row-gap": "20px",
-			"column-gap": "20px"
+			"row-gap": "2vh",
+			"column-gap": "2vw"
 		});
 		imageListContainer.click((event) => {
 			if ($(event.target)[0].className == "futaba_lightbox_image_list_container") {
@@ -364,6 +368,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"right": "0",
 			"background": "rgba(0, 0, 0, 0.8)",
 			"z-index": "2000000014",
+			"padding-bottom": "2vh"
 		});
 		imageListOverLay.append(imageListContainer);
 
